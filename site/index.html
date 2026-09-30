@@ -3,99 +3,185 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bopcart — Autonomous Agents with a Human Fallback</title>
-<meta name="description" content="Autonomous commerce with an on-demand human fallback.">
-<style>
-:root{--bg:#0b0d0c;--fg:#d8e0da;--dim:#8a968e;--g:#39ff88;--a:#ffb000;--line:#1f2622}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
-main{max-width:760px;margin:0 auto;padding:3rem 1.25rem}
-h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.2;color:var(--g);margin:0 0 .75rem}
-h2{font-size:1.1rem;color:var(--a);margin:2.5rem 0 .5rem}
-h2::before{content:"> ";color:var(--g)}
-.sub{color:var(--dim);margin:0}
-section{border-top:1px solid var(--line)}
-[role=tablist]{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
-button,.btn{font:inherit;cursor:pointer;background:transparent;color:var(--fg);border:1px solid var(--dim);padding:.6rem 1rem;border-radius:4px}
-button[aria-selected=true]{border-color:var(--g);color:var(--g)}
-.btn{border-color:var(--g);color:var(--bg);background:var(--g);font-weight:700}
-:focus-visible{outline:2px solid var(--a);outline-offset:2px}
-form{border:1px solid var(--line);padding:1.25rem;border-radius:4px;margin-bottom:1rem}
-form h3{margin:0 0 1rem;font-size:1rem;color:var(--g)}
-label{display:block;margin:.75rem 0 .25rem;color:var(--fg)}
-input,select,textarea{width:100%;font:inherit;color:var(--fg);background:#121614;border:1px solid var(--dim);border-radius:4px;padding:.55rem}
-.hp{position:absolute;left:-9999px}
-.opt{color:var(--dim)}
-footer{color:var(--dim);border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;font-size:.9rem}
-</style>
+<title>Bopcart | Autonomous Agents with a Real Wallet and a Human Fallback</title>
+<meta name="description" content="Escrow-backed autonomous shopping that dispatches masked human runners when software agents hit the real world. Pre-launch waitlist.">
+<meta name="keywords" content="autonomous commerce, agent escrow, human fallback, policy-bounded agents, masked checkout">
+<meta name="theme-color" content="#070806">
+<link rel="canonical" href="https://bopcart.store/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bopcart">
+<meta property="og:url" content="https://bopcart.store/">
+<meta property="og:title" content="Bopcart | Autonomous Agents with a Real Wallet and a Human Fallback">
+<meta property="og:description" content="Escrow-backed autonomous shopping that dispatches masked human runners when software agents hit the real world. Pre-launch waitlist.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<main>
-<header>
-<h1>Autonomous Agents with a Real Wallet—and a Human Fallback.</h1>
-<p class="sub">Autonomous Commerce with an On-Demand Human Fallback.</p>
+<div class="scanlines" aria-hidden="true"></div>
+<a class="skip" href="#waitlist">Skip to waitlist</a>
+<header class="status">
+  <a class="brand" href="/">
+    <img src="/brand/bopcart-mark.svg" width="22" height="22" alt="">
+    BOPCART
+  </a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#problem">Fault</a>
+    <a href="#stack">Stack</a>
+    <a href="#waitlist">Waitlist</a>
+  </nav>
 </header>
 
-<section aria-labelledby="problem">
-<h2 id="problem">The problem</h2>
-<p>Software agents fail the moment they hit the real world: store pickup, voice/phone gates, CAPTCHAs.</p>
-</section>
+<main>
+  <section class="wrap hero" aria-labelledby="headline">
+    <div>
+      <p class="boot"><span>SYS</span> autonomous commerce protocol · real-world fallback · waitlist open</p>
+      <h1 id="headline">Autonomous Agents with a Real Wallet—and a Human Fallback.<span class="cursor" aria-hidden="true"></span></h1>
+      <p class="sub">Autonomous Commerce with an On-Demand Human Fallback.</p>
+      <p class="lede">
+        Not a gig board. Bopcart is governed purchasing infrastructure: policy-bounded agents,
+        tokenized checkout, escrow, and a real-world bridge when software stalls.
+      </p>
+      <p class="prelaunch" role="note">Pre-launch. Not yet live for customers.</p>
+      <div class="cta-row">
+        <a class="btn" href="#waitlist-operator">Join as Operator</a>
+        <a class="btn ghost" href="#waitlist-runner">Become a Runner</a>
+      </div>
+    </div>
+    <aside class="term" aria-label="Example flow (illustrative, not a live system)">
+      <div class="term-bar"><span>example flow</span><span>illustrative · not live</span></div>
+      <pre><span class="mute">01</span> <span class="ok">policy</span>    budget ∩ vendor list
+<span class="mute">02</span> <span class="ok">redact</span>    PII kept out of the model
+<span class="mute">03</span> <span class="ok">escrow</span>    designed for 2-of-3
+<span class="mute">04</span> <span class="warn">gate</span>      pickup needs a human
+<span class="mute">05</span> <span class="warn">fallback</span>  masked runner task
+<span class="mute">06</span> <span class="ok">receipt</span>   signed, tamper-evident</pre>
+    </aside>
+  </section>
 
-<section aria-labelledby="solution">
-<h2 id="solution">The fix</h2>
-<p>Escrow-backed autonomous shopping that dispatches zero-knowledge human runners to clear physical and verification blocks. Runners never see buyer identity or payment details.</p>
-</section>
+  <section class="wrap split" id="problem">
+    <div class="pane">
+      <p class="kicker">Fault</p>
+      <h2>Software agents fail the moment they touch the real world.</h2>
+      <p>
+        Computer-use stacks browse until they hit a curb: in-store pickup, a phone gate,
+        CAPTCHA, or a clerk who wants a human. Then the session dies. There is no real-world bridge.
+      </p>
+    </div>
+    <div class="pane">
+      <p class="kicker">Clearance</p>
+      <h2>Escrow-backed shopping with a masked, blind runner.</h2>
+      <p>
+        Bopcart is built to keep spend inside policy bounds, inject payment tokens the model never sees,
+        hold funds in escrow, and dispatch a masked human only when the clean path is blocked.
+      </p>
+    </div>
+  </section>
 
-<section aria-labelledby="waitlist">
-<h2 id="waitlist">Join the waitlist</h2>
-<div role="tablist" aria-label="Waitlist type" id="tabs" hidden>
-<button type="button" role="tab" id="tab-op" aria-controls="panel-op" aria-selected="true">Deploy an Agent</button>
-<button type="button" role="tab" id="tab-run" aria-controls="panel-run" aria-selected="false" tabindex="-1">Become a Runner</button>
-</div>
+  <section class="wrap layers" id="stack">
+    <p class="kicker">Stack</p>
+    <h2>Five layers. One signed audit trail.</h2>
+    <div class="frame-list">
+      <article class="frame">
+        <div class="idx">01</div>
+        <div>
+          <h3>Policy Control</h3>
+          <p>No session and no tool call until a compiled policy check says the intent is in bounds.</p>
+          <p class="meta">Per-ticket spend cap · vendor allowlist · bounded retries before escalation</p>
+        </div>
+      </article>
+      <article class="frame">
+        <div class="idx">02</div>
+        <div>
+          <h3>Just-in-Time Token Injection</h3>
+          <p>Sensitive personal data is stripped before the model. Cards and addresses enter the HTTP client inside an isolated sandbox, never the prompt.</p>
+          <p class="meta">Ephemeral merchant tokens · reasoning chain stays secret-blind</p>
+        </div>
+      </article>
+      <article class="frame">
+        <div class="idx">03</div>
+        <div>
+          <h3>Escrow Settlement</h3>
+          <p>Designed for 2-of-3 escrow: buyer key, Bopcart arbiter key, merchant/processor key. Funds release when the order is confirmed.</p>
+          <p class="meta">Bopcart as clearinghouse, not a message board</p>
+        </div>
+      </article>
+      <article class="frame">
+        <div class="idx">04</div>
+        <div>
+          <h3>On-Demand Human Fallback</h3>
+          <p>Triggered by physical errands, voice confirmation, or bot walls. A masked runner opens a scoped micro-task link and never sees the buyer.</p>
+          <p class="meta">Masked runner · isolated worker sandbox</p>
+        </div>
+      </article>
+      <article class="frame">
+        <div class="idx">05</div>
+        <div>
+          <h3>Proof Continuity</h3>
+          <p>Every purchase, hold, or dispatch appends a leaf to an append-only log. Both sides get tamper-evident signed receipts (post-quantum signing in development).</p>
+          <p class="meta">leaf id · session · actor · payload hash · policy hash · prev hash · settlement · signature</p>
+        </div>
+      </article>
+    </div>
+  </section>
 
-<form id="panel-op" role="tabpanel" aria-labelledby="tab-op" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
-<h3>Deploy an Agent — Buyers / Operators</h3>
-<input type="hidden" name="form-name" value="waitlist-operator">
-<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label for="op-email">Email</label>
-<input id="op-email" name="email" type="email" required autocomplete="email">
-<label for="op-company">Company <span class="opt">(optional)</span></label>
-<input id="op-company" name="company" type="text" autocomplete="organization">
-<label for="op-use">What would you automate? <span class="opt">(optional)</span></label>
-<textarea id="op-use" name="automate" rows="3"></textarea>
-<p><button class="btn" type="submit">Join as Operator</button></p>
-</form>
+  <section class="wrap waitlist" id="waitlist" aria-labelledby="waitlist-title">
+    <p class="kicker">Waitlist</p>
+    <h2 id="waitlist-title">Two circuits. One waitlist.</h2>
+    <p class="copy">Operators deploy bounded agents. Runners clear the blocks software cannot. Choose a role.</p>
+    <div class="form-shell" id="waitlist-forms">
+      <div class="toggle" role="group" aria-label="Waitlist role" hidden>
+        <button type="button" data-role="operator" aria-controls="waitlist-operator" aria-pressed="true">Deploy an Agent · Operators</button>
+        <button type="button" data-role="runner" aria-controls="waitlist-runner" aria-pressed="false">Become a Runner · Earners</button>
+      </div>
 
-<form id="panel-run" role="tabpanel" aria-labelledby="tab-run" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
-<h3>Become a Runner — Earners</h3>
-<input type="hidden" name="form-name" value="waitlist-runner">
-<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label for="run-email">Email</label>
-<input id="run-email" name="email" type="email" required autocomplete="email">
-<label for="run-loc">City / ZIP</label>
-<input id="run-loc" name="location" type="text" required autocomplete="postal-code">
-<label for="run-avail">Availability <span class="opt">(optional)</span></label>
-<select id="run-avail" name="availability">
-<option value="">Select…</option>
-<option>Weekdays</option>
-<option>Evenings</option>
-<option>Weekends</option>
-<option>Flexible</option>
-</select>
-<p><button class="btn" type="submit">Join as Runner</button></p>
-</form>
-</section>
+      <form class="form" id="waitlist-operator" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="waitlist-operator">
+        <p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <h3 class="role-line">Deploy an Agent — buyer / operator circuit. Policy bounds first.</h3>
+        <label for="op-email"><span>Email</span>
+          <input id="op-email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@domain">
+        </label>
+        <label for="op-company"><span>Company <span class="opt">(optional)</span></span>
+          <input id="op-company" name="company" type="text" maxlength="120" autocomplete="organization">
+        </label>
+        <label for="op-use"><span>What would you automate? <span class="opt">(optional)</span></span>
+          <textarea id="op-use" name="automate" rows="3" maxlength="500" placeholder="Agent stack, spend envelope, merchant set"></textarea>
+        </label>
+        <button class="btn" type="submit">Join as Operator</button>
+      </form>
 
-<footer>Bopcart · PrestigeSF</footer>
+      <form class="form runner" id="waitlist-runner" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="waitlist-runner">
+        <p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <h3 class="role-line">Become a Runner — earner circuit. Masked sandbox, never buyer secrets.</h3>
+        <label for="run-email"><span>Email</span>
+          <input id="run-email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@domain">
+        </label>
+        <label for="run-loc"><span>City / ZIP</span>
+          <input id="run-loc" name="location" type="text" required maxlength="80" autocomplete="postal-code">
+        </label>
+        <label for="run-avail"><span>Availability <span class="opt">(optional)</span></span>
+          <select id="run-avail" name="availability">
+            <option value="">Select…</option>
+            <option>Weekdays</option>
+            <option>Evenings</option>
+            <option>Weekends</option>
+            <option>Flexible</option>
+          </select>
+        </label>
+        <button class="btn amber" type="submit">Join as Runner</button>
+      </form>
+    </div>
+  </section>
 </main>
-<script>
-(function(){
-  var tabs=document.getElementById('tabs');tabs.hidden=false;
-  var b=[document.getElementById('tab-op'),document.getElementById('tab-run')];
-  function sel(i){b.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});}
-  b.forEach(function(t,i){t.addEventListener('click',function(){sel(i)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=(i+1)%2;sel(n);b[n].focus();}});});
-  sel(0);
-})();
-</script>
+
+<footer class="wrap foot">
+  <span>bopcart.store</span>
+  <span>Pre-launch. Not yet live for customers.</span>
+  <span>Protocol waitlist · not a marketplace</span>
+</footer>
+<script src="/app.js" defer></script>
 </body>
 </html>
