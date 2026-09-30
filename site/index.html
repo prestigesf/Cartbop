@@ -3,23 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bopcart — Agents that buy inside your rules, with a human fallback</title>
-<meta name="description" content="Bopcart is pre-launch governed purchasing for AI agents: policy checks before checkout, approval bound to the exact amount and merchant, and a masked human runner when software hits a real-world wall. Join the waitlist.">
+<title>Cartbop — Autonomous Agents with a Real Wallet—and a Human Fallback</title>
+<meta name="description" content="Cartbop is pre-launch governed purchasing for AI agents: policy checks before checkout, approval bound to the exact amount and merchant, and a masked human runner when software hits a real-world wall. Join the waitlist.">
 <meta name="theme-color" content="#070b14">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/hero.css">
+<script src="/assets/approval.js" defer></script>
 <script src="/assets/app.js" defer></script>
+<script src="/assets/hero.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <a class="skip" href="#waitlist">Skip to waitlist</a>
 
 <header class="bar" id="top">
-  <a class="brand" href="/" aria-label="Bopcart home">
+  <a class="brand" href="/" aria-label="Cartbop home">
     <img src="/assets/mark.svg" alt="" width="36" height="36">
-    <span class="brand-word">Bopcart</span>
+    <span class="brand-word">Cartbop</span>
   </a>
   <span class="pill pill-pre"><span class="dot" aria-hidden="true"></span>Pre-launch</span>
   <div class="bar-actions">
@@ -52,47 +55,74 @@
 
 <main id="main">
 
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow reveal">Governed purchasing for AI agents</p>
-      <h1 id="hero-title" class="reveal">Let agents buy&nbsp;— only inside the&nbsp;rules you&nbsp;set.</h1>
-      <p class="lede reveal">Bopcart checks every order against your spending cap and allowed merchants, binds approval to the exact amount, and hands real-world blockers — a store pickup, a phone gate — to a masked human runner.</p>
-      <div class="hero-ctas reveal">
-        <a class="btn btn-primary" href="#waitlist" data-join="operator">Join as Operator</a>
+<section class="hx" id="hero" aria-labelledby="hero-title">
+  <div class="hx-light" aria-hidden="true"><span class="hx-key"></span><span class="hx-rim"></span><span class="hx-floor"></span></div>
+  <div class="hx-inner">
+    <div class="hx-copy">
+      <p class="hx-eyebrow"><span class="hx-dot" aria-hidden="true"></span>Pre-launch · governed purchasing for AI agents</p>
+      <h1 id="hero-title" class="hx-title"><span class="hx-l">Autonomous Agents</span> <span class="hx-l">with a <span class="hx-wallet">Real Wallet</span>—</span><span class="hx-l">and a <span class="hx-human">Human Fallback.</span></span></h1>
+      <p class="hx-sub">Your agent proposes an exact order. You approve <strong>those exact values</strong>. Change anything and the approval is void. When software hits a real-world wall, a masked human runner takes that step.</p>
+      <div class="hx-ctas">
+        <a class="btn btn-primary hx-cta" href="#waitlist" data-join="operator">Join the waitlist <span class="hx-arrow" aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="#waitlist" data-join="runner">Become a Runner</a>
       </div>
-      <dl class="who reveal">
-        <div><dt>Operators</dt><dd>Teams deploying agents that need to purchase things.</dd></div>
-        <div><dt>Runners</dt><dd>People who clear the steps software can’t — without seeing who the buyer is.</dd></div>
+      <dl class="hx-truth" aria-label="What is real today">
+        <div><dt><span class="tl tl-sim" aria-hidden="true"></span>Browser simulation</dt><dd>The example on this page. No payment, nothing sent anywhere.</dd></div>
+        <div><dt><span class="tl tl-test" aria-hidden="true"></span>Tested, not live</dt><dd>Policy checks (Cedar) before any escrow step; opt-in ML-DSA-65 receipt signing, in a private dev backend.</dd></div>
+        <div><dt><span class="tl tl-plan" aria-hidden="true"></span>Planned</dt><dd>Live payments, escrow, hardware key custody, the runner network.</dd></div>
       </dl>
-      <p class="prelaunch reveal"><strong>Pre-launch.</strong> Not yet live for customers.</p>
     </div>
 
-    <figure class="stack reveal" aria-labelledby="stack-cap">
-      <figcaption id="stack-cap" class="tag tag-example">Example · simulated</figcaption>
-      <div class="sheet sheet-back" aria-hidden="true">
-        <p class="mono k">intent</p>
-        <p class="sheet-q">“Reorder drill batteries and screws. Keep it under the cap.”</p>
-      </div>
-      <div class="sheet sheet-mid" aria-hidden="true">
-        <p class="mono k">policy review</p>
-        <ul class="checks">
-          <li><span class="ck ok" aria-hidden="true"></span>Under spending cap</li>
-          <li><span class="ck ok" aria-hidden="true"></span>Merchant on allow-list</li>
-          <li><span class="ck ok" aria-hidden="true"></span>Retries within limit</li>
-        </ul>
-      </div>
-      <div class="sheet sheet-front">
-        <div class="ticket-head">
-          <p class="mono k">approval</p>
-          <span class="tag tag-sim">not a real payment</span>
+    <figure class="hx-stage" aria-labelledby="hx-cap">
+      <figcaption id="hx-cap" class="hx-label"><span class="hx-label-k">Example</span> · simulated in your browser — no payment, unsigned receipt</figcaption>
+      <div class="hx-view">
+        <div class="hx-scene" id="hx-scene" data-state="voided" data-changed="qty total">
+          <div class="hx-plane hx-req">
+            <p class="hx-k"><span class="hx-av" aria-hidden="true"></span>Agent · request</p>
+            <p class="hx-req-q">“Reorder one 18V drill battery<span class="hx-hide-sm"> from Northside Hardware</span>. Ship it. Stay under the $150 cap.”</p>
+          </div>
+
+          <div class="hx-plane hx-order">
+            <div class="hx-order-head">
+              <p class="hx-k">Exact order<span class="hx-hide-sm"> · proposed by the agent</span></p>
+            </div>
+            <dl class="hx-rows">
+              <div class="hx-row" data-f="merchant"><dt>Merchant</dt><dd><span class="v-was">Northside Hardware</span><span class="v-now"></span></dd><i class="pin" aria-hidden="true"></i></div>
+              <div class="hx-row" data-f="item"><dt>Item</dt><dd><span class="v-was">Drill battery, 18V</span><span class="v-now"></span></dd><i class="pin" aria-hidden="true"></i></div>
+              <div class="hx-row is-changed" data-f="qty"><dt>Qty</dt><dd><span class="v-was">1</span><span class="v-now">2</span></dd><i class="pin" aria-hidden="true"></i></div>
+              <div class="hx-row" data-f="fulfil"><dt>Fulfilment</dt><dd><span class="v-was">Ship to operator address</span><span class="v-now"></span></dd><i class="pin" aria-hidden="true"></i></div>
+              <div class="hx-row hx-total is-changed" data-f="total"><dt>Total</dt><dd><span class="v-was">$64.00</span><span class="v-now">$128.00</span></dd><i class="pin" aria-hidden="true"></i></div>
+            </dl>
+            <div class="hx-order-foot">
+              <p class="hx-chk"><span class="ck ok" aria-hidden="true"></span>Policy: under cap · merchant allowed</p>
+              <p class="hx-fp">fingerprint <span class="mono" id="hx-fp-now">14afc505…695e</span></p>
+            </div>
+          </div>
+
+          <div class="hx-plane hx-seal">
+            <svg class="hx-ring" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><defs><path id="hx-arc" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#hx-arc" textLength="486" lengthAdjust="spacing">HUMAN APPROVAL · BOUND TO THESE EXACT VALUES ·</textPath></text></svg>
+            <div class="hx-seal-core">
+              <p class="hx-seal-k">Approved</p>
+              <p class="hx-seal-amt" id="hx-seal-amt">$64.00</p>
+              <p class="hx-seal-fp mono" id="hx-fp-ok">ccb75223…58fa</p>
+            </div>
+          </div>
+          <p class="hx-void" aria-hidden="true">VOID</p>
         </div>
-        <p class="ticket-amt"><span class="cur">$</span>83.90</p>
-        <p class="ticket-m">Northside Hardware <span class="muted">· 2 items</span></p>
-        <p class="ticket-bind"><span class="lock" aria-hidden="true"></span>Bound to this amount and merchant. Any change voids it.</p>
       </div>
+
+      <p class="hx-status" id="hx-status" data-tone="bad"><strong>Approval void.</strong> The quantity changed after approval, so the approval no longer covers this order.</p>
+
+      <ol class="hx-story" id="hx-story" aria-label="What the example shows">
+        <li data-s="request"><b>Request</b><span>The agent asks for one item.</span></li>
+        <li data-s="order"><b>Exact order</b><span>Merchant, item, qty, fulfilment, total.</span></li>
+        <li data-s="approved"><b>Approved</b><span>A person approves those exact values.</span></li>
+        <li data-s="change"><b>Changed</b><span>Qty 1 → 2, total $64.00 → $128.00.</span></li>
+        <li data-s="void"><b>Void</b><span>The approval no longer applies.</span></li>
+      </ol>
+
+      <div class="hx-controls" id="hx-controls" hidden></div>
+      <p class="sr-only" id="hx-live" aria-live="polite"></p>
     </figure>
   </div>
 </section>
@@ -192,7 +222,7 @@
     <div>
       <p class="eyebrow reveal">04 · For runners</p>
       <h2 id="run-title" class="reveal">A masked runner clears the step. The buyer stays private.</h2>
-      <p class="reveal">When an order needs a person — collecting from a counter, answering a voice prompt — Bopcart is designed to post a narrow task to a nearby runner. The task carries what’s needed to finish that step and nothing about who is buying.</p>
+      <p class="reveal">When an order needs a person — collecting from a counter, answering a voice prompt — Cartbop is designed to post a narrow task to a nearby runner. The task carries what’s needed to finish that step and nothing about who is buying.</p>
       <p class="reveal muted">The runner network is not recruited yet. Joining the waitlist is how that starts.</p>
       <a class="btn btn-ink reveal" href="#waitlist" data-join="runner">Become a Runner</a>
     </div>
@@ -323,10 +353,10 @@
   <div class="wrap foot-grid">
     <a class="brand" href="#top" aria-label="Back to top">
       <img src="/assets/mark.svg" alt="" width="28" height="28">
-      <span class="brand-word">Bopcart</span>
+      <span class="brand-word">Cartbop</span>
     </a>
     <p>Pre-launch. Not yet live for customers.</p>
-    <p class="muted">Bopcart · a PrestigeSF project · Fonts: Bricolage Grotesque, Instrument Sans, JetBrains Mono (SIL OFL), served from this site.</p>
+    <p class="muted">Cartbop · a PrestigeSF project · Fonts: Bricolage Grotesque, Instrument Sans, JetBrains Mono (SIL OFL), served from this site.</p>
   </div>
 </footer>
 </body>
