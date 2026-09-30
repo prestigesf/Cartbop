@@ -1,101 +1,393 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bopcart — Autonomous Agents with a Human Fallback</title>
-<meta name="description" content="Autonomous commerce with an on-demand human fallback.">
-<style>
-:root{--bg:#0b0d0c;--fg:#d8e0da;--dim:#8a968e;--g:#39ff88;--a:#ffb000;--line:#1f2622}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
-main{max-width:760px;margin:0 auto;padding:3rem 1.25rem}
-h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.2;color:var(--g);margin:0 0 .75rem}
-h2{font-size:1.1rem;color:var(--a);margin:2.5rem 0 .5rem}
-h2::before{content:"> ";color:var(--g)}
-.sub{color:var(--dim);margin:0}
-section{border-top:1px solid var(--line)}
-[role=tablist]{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
-button,.btn{font:inherit;cursor:pointer;background:transparent;color:var(--fg);border:1px solid var(--dim);padding:.6rem 1rem;border-radius:4px}
-button[aria-selected=true]{border-color:var(--g);color:var(--g)}
-.btn{border-color:var(--g);color:var(--bg);background:var(--g);font-weight:700}
-:focus-visible{outline:2px solid var(--a);outline-offset:2px}
-form{border:1px solid var(--line);padding:1.25rem;border-radius:4px;margin-bottom:1rem}
-form h3{margin:0 0 1rem;font-size:1rem;color:var(--g)}
-label{display:block;margin:.75rem 0 .25rem;color:var(--fg)}
-input,select,textarea{width:100%;font:inherit;color:var(--fg);background:#121614;border:1px solid var(--dim);border-radius:4px;padding:.55rem}
-.hp{position:absolute;left:-9999px}
-.opt{color:var(--dim)}
-footer{color:var(--dim);border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;font-size:.9rem}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bopcart — Intent, reviewed before it spends</title>
+  <meta name="description" content="Bopcart turns a shopping intent into a reviewed, authorized action. Policy first. Amount bound. Human fallback when software stops. Waitlist open.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3eee4;
+      --paper-2: #eae3d6;
+      --ink: #161410;
+      --ink-2: #3c372f;
+      --mute: #6b6458;
+      --line: #d2c8b6;
+      --pine: #16382e;
+      --signal: #0e6d58;
+      --signal-2: #14967a;
+      --glow: rgba(20, 120, 98, 0.16);
+      --warn: #8f1d18;
+      --ok: #0b5c46;
+      --blocked: #6b4a12;
+      --shadow: 0 24px 60px rgba(22, 20, 16, 0.12);
+      --radius: 22px;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 480px at 10% -10%, rgba(20,150,120,.12), transparent 50%),
+        radial-gradient(900px 500px at 100% 0%, rgba(22,20,16,.06), transparent 45%),
+        var(--paper);
+      color: var(--ink);
+      font: 17px/1.55 "Source Sans 3", system-ui, sans-serif;
+    }
+    a { color: var(--signal); }
+    :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+    .wrap { width: min(var(--max), calc(100% - 2rem)); margin-inline: auto; }
+    header.top {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(16px);
+      background: color-mix(in srgb, var(--paper) 82%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    }
+    .top-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 1rem; }
+    .brand { display: flex; align-items: baseline; gap: .55rem; text-decoration: none; color: inherit; }
+    .brand strong { font-family: Fraunces, Georgia, serif; font-size: 1.25rem; letter-spacing: -.03em; }
+    .brand span { color: var(--mute); font-size: .82rem; }
+    .menu-btn {
+      font: inherit; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+      border-radius: 999px; padding: .55rem 1rem; cursor: pointer;
+    }
+    .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 2.5rem; padding: 3.2rem 0 2.2rem; align-items: end; }
+    h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: .98;
+      letter-spacing: -.04em;
+      font-weight: 600;
+      margin: 0 0 1rem;
+    }
+    .lede { font-size: 1.15rem; color: var(--ink-2); max-width: 38rem; }
+    .who { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 1.5rem; }
+    .chip { border: 1px solid var(--line); background: #fff8ee; border-radius: 999px; padding: .35rem .7rem; font-size: .88rem; color: var(--ink-2); }
+    .actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 48px; padding: 0 1.15rem; border-radius: 999px;
+      text-decoration: none; font-weight: 600; border: 1px solid transparent; cursor: pointer; font: inherit;
+    }
+    .btn-primary { background: var(--pine); color: var(--paper); }
+    .btn-ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+    .hero-panel {
+      background: linear-gradient(180deg, #fffdf8, var(--paper-2));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .kicker { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin: 0 0 .4rem; }
+    .demo-note {
+      display: inline-block; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid var(--line); border-radius: 999px; padding: .2rem .5rem; color: var(--blocked);
+      background: #fff3d6;
+    }
+    .rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; margin: .8rem 0 1rem; }
+    .rail button {
+      font: inherit; text-align: left; background: transparent; border: 1px dashed var(--line);
+      border-radius: 14px; padding: .55rem .5rem; cursor: pointer; color: var(--mute);
+    }
+    .rail button[aria-current="step"] { border-style: solid; border-color: var(--signal); color: var(--ink); background: #fff; }
+    .rail b { display: block; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
+    .stage { min-height: 230px; }
+    label { display: block; font-size: .88rem; margin: .35rem 0 .2rem; }
+    input, select, textarea {
+      width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 12px;
+      padding: .7rem .8rem; background: #fffdf8; color: var(--ink);
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+    .meta { display: grid; gap: .35rem; margin: .6rem 0; font-size: .95rem; }
+    .meta div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); padding-bottom: .35rem; }
+    .state { display: inline-flex; border-radius: 999px; padding: .2rem .6rem; font-size: .8rem; font-weight: 600; }
+    .state-pending { background: #efe7d4; color: var(--blocked); }
+    .state-blocked { background: #f3d6d3; color: var(--warn); }
+    .state-failed { background: #ead9d8; color: var(--warn); }
+    .state-completed { background: #d8eee6; color: var(--ok); }
+    .inspect {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .78rem; background: var(--pine); color: #e7f3ee;
+      border-radius: 14px; padding: .8rem; overflow-wrap: anywhere;
+    }
+    .stale { background: #fff1e8; border: 1px solid #e4b39a; border-radius: 12px; padding: .7rem; color: var(--warn); font-size: .92rem; }
+    section { padding: 3rem 0; }
+    .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 2rem; align-items: start; }
+    .slab { background: #fffaf2; border: 1px solid var(--line); border-radius: 28px; padding: 1.4rem 1.5rem; }
+    .overlap { margin-top: -2.5rem; position: relative; z-index: 1; }
+    h2 { font-family: Fraunces, Georgia, serif; font-size: clamp(1.7rem, 3vw, 2.4rem); letter-spacing: -.03em; margin: 0 0 .6rem; }
+    .cols-3 { display: grid; grid-template-columns: 1.2fr .8fr .9fr; gap: 1rem; }
+    .tall { min-height: 220px; }
+    .band { background: var(--pine); color: #f4efe6; border-radius: 28px; padding: 1.6rem; }
+    .band h2 { color: #f4efe6; }
+    .band p { color: #c9ddd5; }
+    form.card { background: #fffaf2; border: 1px solid var(--line); border-radius: 22px; padding: 1.1rem; }
+    form.card h3 { margin: 0 0 .8rem; font-family: Fraunces, Georgia, serif; }
+    .hp { position: absolute; left: -9999px; }
+    footer.site { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--mute); font-size: .92rem; }
+    footer.site nav { display: flex; flex-wrap: wrap; gap: .8rem 1.1rem; margin-bottom: .8rem; }
+    .nav-screen {
+      position: fixed; inset: 0; background: color-mix(in srgb, var(--pine) 94%, black);
+      color: var(--paper); z-index: 40; display: none; padding: 1.2rem;
+    }
+    .nav-screen.open { display: grid; align-content: start; gap: 1.2rem; }
+    .nav-screen a { color: inherit; text-decoration: none; font-family: Fraunces, Georgia, serif; font-size: clamp(2rem, 6vw, 3.2rem); }
+    .nav-top { display: flex; justify-content: space-between; align-items: center; }
+    .empty { color: var(--mute); font-style: italic; }
+    @media (max-width: 860px) {
+      .hero, .split, .cols-3, .row, .rail { grid-template-columns: 1fr; }
+      .rail { grid-template-columns: 1fr 1fr; }
+      .overlap { margin-top: 0; }
+      .hero { padding-top: 1.6rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
 </head>
 <body>
-<main>
-<header>
-<h1>Autonomous Agents with a Real Wallet—and a Human Fallback.</h1>
-<p class="sub">Autonomous Commerce with an On-Demand Human Fallback.</p>
-</header>
-
-<section aria-labelledby="problem">
-<h2 id="problem">The problem</h2>
-<p>Software agents fail the moment they hit the real world: store pickup, voice/phone gates, CAPTCHAs.</p>
-</section>
-
-<section aria-labelledby="solution">
-<h2 id="solution">The fix</h2>
-<p>Escrow-backed autonomous shopping that dispatches zero-knowledge human runners to clear physical and verification blocks. Runners never see buyer identity or payment details.</p>
-</section>
-
-<section aria-labelledby="waitlist">
-<h2 id="waitlist">Join the waitlist</h2>
-<div role="tablist" aria-label="Waitlist type" id="tabs" hidden>
-<button type="button" role="tab" id="tab-op" aria-controls="panel-op" aria-selected="true">Deploy an Agent</button>
-<button type="button" role="tab" id="tab-run" aria-controls="panel-run" aria-selected="false" tabindex="-1">Become a Runner</button>
-</div>
-
-<form id="panel-op" role="tabpanel" aria-labelledby="tab-op" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
-<h3>Deploy an Agent — Buyers / Operators</h3>
-<input type="hidden" name="form-name" value="waitlist-operator">
-<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label for="op-email">Email</label>
-<input id="op-email" name="email" type="email" required autocomplete="email">
-<label for="op-company">Company <span class="opt">(optional)</span></label>
-<input id="op-company" name="company" type="text" autocomplete="organization">
-<label for="op-use">What would you automate? <span class="opt">(optional)</span></label>
-<textarea id="op-use" name="automate" rows="3"></textarea>
-<p><button class="btn" type="submit">Join as Operator</button></p>
-</form>
-
-<form id="panel-run" role="tabpanel" aria-labelledby="tab-run" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
-<h3>Become a Runner — Earners</h3>
-<input type="hidden" name="form-name" value="waitlist-runner">
-<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label for="run-email">Email</label>
-<input id="run-email" name="email" type="email" required autocomplete="email">
-<label for="run-loc">City / ZIP</label>
-<input id="run-loc" name="location" type="text" required autocomplete="postal-code">
-<label for="run-avail">Availability <span class="opt">(optional)</span></label>
-<select id="run-avail" name="availability">
-<option value="">Select…</option>
-<option>Weekdays</option>
-<option>Evenings</option>
-<option>Weekends</option>
-<option>Flexible</option>
-</select>
-<p><button class="btn" type="submit">Join as Runner</button></p>
-</form>
-</section>
-
-<footer>Bopcart · PrestigeSF</footer>
-</main>
-<script>
-(function(){
-  var tabs=document.getElementById('tabs');tabs.hidden=false;
-  var b=[document.getElementById('tab-op'),document.getElementById('tab-run')];
-  function sel(i){b.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});}
-  b.forEach(function(t,i){t.addEventListener('click',function(){sel(i)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=(i+1)%2;sel(n);b[n].focus();}});});
-  sel(0);
-})();
-</script>
+  <a class="wrap" href="#main" style="position:absolute;left:-999px;top:auto">Skip to content</a>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="#main"><strong>Bopcart</strong><span>PrestigeSF</span></a>
+      <button class="menu-btn" type="button" id="menuOpen" aria-haspopup="dialog">Menu +</button>
+    </div>
+  </header>
+  <div class="nav-screen" id="menu" role="dialog" aria-modal="true" aria-label="Site menu" hidden>
+    <div class="nav-top wrap">
+      <span>Bopcart</span>
+      <button class="menu-btn" type="button" id="menuClose">Close</button>
+    </div>
+    <nav class="wrap" style="display:grid;gap:.4rem">
+      <a href="#journey" data-close>Intent rail</a>
+      <a href="#how" data-close>How it works</a>
+      <a href="#waitlist" data-close>Waitlist</a>
+      <a href="#states" data-close>States</a>
+    </nav>
+  </div>
+  <main id="main">
+    <section class="wrap hero">
+      <div>
+        <p class="kicker">Autonomous commerce · human fallback</p>
+        <h1>A shopping intent that cannot spend until it is reviewed.</h1>
+        <p class="lede">Bopcart is for operators who want an agent to buy routine goods — and a human runner when the store, the phone, or a bot-wall stops software. Policy first. Amount bound. No silent charge.</p>
+        <div class="who" aria-label="Who it helps">
+          <span class="chip">Operators / buyers</span>
+          <span class="chip">Runners / earners</span>
+          <span class="chip">Not GoldTrac. Not a public checkout API.</span>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
+          <a class="btn btn-ghost" href="#journey">Walk an intent</a>
+        </div>
+      </div>
+      <aside class="hero-panel" id="journey" aria-labelledby="rail-title">
+        <p class="kicker" id="rail-title">Signature interaction</p>
+        <p style="margin:.2rem 0 .6rem"><span class="demo-note">Demonstration</span> — no payment leaves this page.</p>
+        <div class="rail" role="list">
+          <button type="button" data-step="intent" aria-current="step"><b>01 Intent</b>Write the buy</button>
+          <button type="button" data-step="review"><b>02 Review</b>Merchant + total</button>
+          <button type="button" data-step="authorize"><b>03 Authorize</b>Policy bound</button>
+          <button type="button" data-step="inspect"><b>04 Inspect</b>Result, not theater</button>
+        </div>
+        <div class="stage" id="stage"></div>
+      </aside>
+    </section>
+    <section class="wrap overlap" id="how">
+      <div class="cols-3">
+        <article class="slab tall">
+          <p class="kicker">Working capability</p>
+          <h2>Policy before the browser.</h2>
+          <p>The private engine evaluates a purchase against a budget cap, redaction flag, and intent expiry <em>before</em> a merchant page or payment API is touched. Deny stops the path. This site does not expose that API.</p>
+        </article>
+        <article class="band tall">
+          <p class="kicker" style="color:#9ec9bb">Human fallback</p>
+          <h2>When software dies.</h2>
+          <p>Pickup, a voice gate, a challenge page. A runner gets a narrow task. They do not receive the buyer profile.</p>
+        </article>
+        <article class="slab tall">
+          <p class="kicker">Evidence</p>
+          <h2>Inspectable after.</h2>
+          <p>A completed private run can mint a hashed leaf. This page shows the <em>shape</em> of inspection, labeled as a demo hash — not a live GoldTrac proof.</p>
+        </article>
+      </div>
+    </section>
+    <section class="wrap" id="states">
+      <div class="split">
+        <div>
+          <p class="kicker">Honest states</p>
+          <h2>Pending is not paid.</h2>
+          <p>Customer language first. Technical evidence stays behind the inspect control. A motion never fakes a receipt.</p>
+        </div>
+        <div class="slab">
+          <p><span class="state state-pending">Pending</span> Intent held. Nothing charged.</p>
+          <p><span class="state state-blocked">Blocked</span> Policy deny, or the amount no longer matches the approval.</p>
+          <p><span class="state state-failed">Failed</span> Path stopped. Recovery is join waitlist or revise intent.</p>
+          <p><span class="state state-completed">Completed</span> Only after a real engine run. Not available on this public page.</p>
+          <p class="empty">Empty cart: there is no public cart. Use the rail to rehearse an intent, then the waitlist.</p>
+        </div>
+      </div>
+    </section>
+    <section class="wrap" id="waitlist">
+      <p class="kicker">Next useful action</p>
+      <h2>Two doors. Same list.</h2>
+      <p class="lede">Stored by Netlify Forms on this static site. Not an account. Not a charge.</p>
+      <div class="split" style="margin-top:1.2rem">
+        <form class="card" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="waitlist-operator">
+          <p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <h3>Deploy an agent</h3>
+          <p>Operators who want bounded buying.</p>
+          <label for="op-email">Email</label>
+          <input id="op-email" name="email" type="email" required autocomplete="email">
+          <label for="op-company">Company <span class="empty">(optional)</span></label>
+          <input id="op-company" name="company" type="text" autocomplete="organization">
+          <label for="op-use">What would you automate? <span class="empty">(optional)</span></label>
+          <textarea id="op-use" name="automate" rows="3"></textarea>
+          <p><button class="btn btn-primary" type="submit">Join as operator</button></p>
+        </form>
+        <form class="card" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="waitlist-runner">
+          <p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <h3>Become a runner</h3>
+          <p>Earners who clear physical or phone blocks.</p>
+          <label for="run-email">Email</label>
+          <input id="run-email" name="email" type="email" required autocomplete="email">
+          <label for="run-loc">City / ZIP</label>
+          <input id="run-loc" name="location" type="text" required autocomplete="postal-code">
+          <label for="run-avail">Availability <span class="empty">(optional)</span></label>
+          <select id="run-avail" name="availability">
+            <option value="">Select…</option>
+            <option>Weekdays</option>
+            <option>Evenings</option>
+            <option>Weekends</option>
+            <option>Flexible</option>
+          </select>
+          <p><button class="btn btn-primary" type="submit">Join as runner</button></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site">
+    <div class="wrap">
+      <nav aria-label="PrestigeSF">
+        <a href="https://prestige-mcp.netlify.app/">Wire</a>
+        <a href="https://prestigemcp.netlify.app/">Spec</a>
+        <a href="https://goldtrac.org/">Trust</a>
+        <a href="https://deadlinesf.net/">Law</a>
+        <a href="mailto:prestigesf4@gmail.com">Contact</a>
+      </nav>
+      <p>Bopcart is a PrestigeSF product. This page is a waitlist and a labeled demonstration — not a live wallet.</p>
+    </div>
+  </footer>
+  <script>
+  (function () {
+    var menu = document.getElementById('menu');
+    var open = document.getElementById('menuOpen');
+    var close = document.getElementById('menuClose');
+    function showMenu(on) {
+      menu.hidden = !on;
+      menu.classList.toggle('open', on);
+      (on ? close : open).focus();
+    }
+    open.addEventListener('click', function () { showMenu(true); });
+    close.addEventListener('click', function () { showMenu(false); });
+    menu.querySelectorAll('[data-close]').forEach(function (a) {
+      a.addEventListener('click', function () { showMenu(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) showMenu(false);
+    });
+    var cap = 7500;
+    var approvedAmount = null;
+    var state = { merchant: 'Fastenal — San Jose', item: '2 × 3/4" EMT conduit', amount: 4720, note: '' };
+    var step = 'intent';
+    var stage = document.getElementById('stage');
+    function dollars(cents) { return '$' + (cents / 100).toFixed(2); }
+    function demoHash(s) {
+      var h = 0;
+      for (var i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+      return ('00000000' + (h >>> 0).toString(16)).slice(-8).repeat(8);
+    }
+    function setStep(name) {
+      step = name;
+      document.querySelectorAll('.rail button').forEach(function (b) {
+        if (b.getAttribute('data-step') === name) b.setAttribute('aria-current', 'step');
+        else b.removeAttribute('aria-current');
+      });
+      render();
+    }
+    function render() {
+      if (step === 'intent') {
+        stage.innerHTML =
+          '<label for="intentText">Intent</label>' +
+          '<textarea id="intentText" rows="3">' + (state.note || 'Reorder 2 boxes of 3/4" EMT conduit for the San Jose job.') + '</textarea>' +
+          '<div class="row"><div><label for="merchant">Merchant</label><input id="merchant" value="' + state.merchant + '"></div>' +
+          '<div><label for="amount">Amount (USD)</label><input id="amount" inputmode="decimal" value="' + (state.amount / 100).toFixed(2) + '"></div></div>' +
+          '<p><button class="btn btn-primary" type="button" id="toReview">Review this intent</button></p>';
+        document.getElementById('toReview').onclick = function () {
+          state.note = document.getElementById('intentText').value;
+          state.merchant = document.getElementById('merchant').value;
+          state.amount = Math.round(parseFloat(document.getElementById('amount').value || '0') * 100);
+          approvedAmount = null;
+          setStep('review');
+        };
+        return;
+      }
+      if (step === 'review') {
+        stage.innerHTML =
+          '<p class="state state-pending">Pending review</p>' +
+          '<div class="meta"><div><span>Merchant</span><strong>' + state.merchant + '</strong></div>' +
+          '<div><span>Items</span><strong>' + state.item + '</strong></div>' +
+          '<div><span>Amount</span><strong>' + dollars(state.amount) + '</strong></div>' +
+          '<div><span>Budget cap</span><strong>' + dollars(cap) + '</strong></div></div>' +
+          '<p><button class="btn btn-primary" type="button" id="toAuth">Request authorization</button> ' +
+          '<button class="btn btn-ghost" type="button" id="back1">Edit intent</button></p>';
+        document.getElementById('toAuth').onclick = function () { setStep('authorize'); };
+        document.getElementById('back1').onclick = function () { setStep('intent'); };
+        return;
+      }
+      if (step === 'authorize') {
+        var over = state.amount > cap;
+        var stale = approvedAmount !== null && approvedAmount !== state.amount;
+        var allow = !over && !stale;
+        if (allow) approvedAmount = state.amount;
+        var badge = over || stale ? '<p class="state state-blocked">Blocked</p>' : '<p class="state state-pending">Authorized for this amount only</p>';
+        var extra = over ? '<p class="stale">Amount exceeds the demonstration cap of ' + dollars(cap) + '. A changed total is not covered by an old yes.</p>' :
+          stale ? '<p class="stale">Amount changed after approval. Re-review required. The previous authorization does not cover this total.</p>' :
+          '<p>Demonstration policy: amount at or under cap, intent still open. This is not the private Cedar engine.</p>';
+        stage.innerHTML = badge + extra +
+          '<label for="amount2">Change amount to test binding</label>' +
+          '<input id="amount2" inputmode="decimal" value="' + (state.amount / 100).toFixed(2) + '">' +
+          '<p><button class="btn btn-primary" type="button" id="rebind">Re-check amount</button> ' +
+          '<button class="btn btn-ghost" type="button" id="toInspect"' + (allow ? '' : ' disabled') + '>Inspect result</button></p>';
+        document.getElementById('rebind').onclick = function () {
+          state.amount = Math.round(parseFloat(document.getElementById('amount2').value || '0') * 100);
+          setStep('authorize');
+        };
+        var insp = document.getElementById('toInspect');
+        if (!insp.disabled) insp.onclick = function () { setStep('inspect'); };
+        return;
+      }
+      stage.innerHTML =
+        '<p class="state state-blocked">Demonstration complete</p>' +
+        '<p>No charge was sent. Completed settlement exists only on the private rail.</p>' +
+        '<div class="inspect">demo_receipt ' + demoHash(state.merchant + state.amount) + '\nmerchant ' + state.merchant + '\namount_cents ' + state.amount + '\ncap_cents ' + cap + '\nlive_engine false</div>' +
+        '<p><button class="btn btn-ghost" type="button" id="reset">New intent</button></p>';
+      document.getElementById('reset').onclick = function () { approvedAmount = null; setStep('intent'); };
+    }
+    document.querySelectorAll('.rail button').forEach(function (b) {
+      b.addEventListener('click', function () { setStep(b.getAttribute('data-step')); });
+    });
+    render();
+  })();
+  </script>
 </body>
 </html>
