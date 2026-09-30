@@ -1,101 +1,333 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bopcart — Autonomous Agents with a Human Fallback</title>
-<meta name="description" content="Autonomous commerce with an on-demand human fallback.">
-<style>
-:root{--bg:#0b0d0c;--fg:#d8e0da;--dim:#8a968e;--g:#39ff88;--a:#ffb000;--line:#1f2622}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
-main{max-width:760px;margin:0 auto;padding:3rem 1.25rem}
-h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.2;color:var(--g);margin:0 0 .75rem}
-h2{font-size:1.1rem;color:var(--a);margin:2.5rem 0 .5rem}
-h2::before{content:"> ";color:var(--g)}
-.sub{color:var(--dim);margin:0}
-section{border-top:1px solid var(--line)}
-[role=tablist]{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
-button,.btn{font:inherit;cursor:pointer;background:transparent;color:var(--fg);border:1px solid var(--dim);padding:.6rem 1rem;border-radius:4px}
-button[aria-selected=true]{border-color:var(--g);color:var(--g)}
-.btn{border-color:var(--g);color:var(--bg);background:var(--g);font-weight:700}
-:focus-visible{outline:2px solid var(--a);outline-offset:2px}
-form{border:1px solid var(--line);padding:1.25rem;border-radius:4px;margin-bottom:1rem}
-form h3{margin:0 0 1rem;font-size:1rem;color:var(--g)}
-label{display:block;margin:.75rem 0 .25rem;color:var(--fg)}
-input,select,textarea{width:100%;font:inherit;color:var(--fg);background:#121614;border:1px solid var(--dim);border-radius:4px;padding:.55rem}
-.hp{position:absolute;left:-9999px}
-.opt{color:var(--dim)}
-footer{color:var(--dim);border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;font-size:.9rem}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bopcart — Agents that buy inside your rules, with a human fallback</title>
+<meta name="description" content="Bopcart is pre-launch governed purchasing for AI agents: policy checks before checkout, approval bound to the exact amount and merchant, and a masked human runner when software hits a real-world wall. Join the waitlist.">
+<meta name="theme-color" content="#070b14">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/styles.css">
+<script src="/assets/app.js" defer></script>
 </head>
 <body>
-<main>
-<header>
-<h1>Autonomous Agents with a Real Wallet—and a Human Fallback.</h1>
-<p class="sub">Autonomous Commerce with an On-Demand Human Fallback.</p>
+<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#waitlist">Skip to waitlist</a>
+
+<header class="bar" id="top">
+  <a class="brand" href="/" aria-label="Bopcart home">
+    <img src="/assets/mark.svg" alt="" width="36" height="36">
+    <span class="brand-word">Bopcart</span>
+  </a>
+  <span class="pill pill-pre"><span class="dot" aria-hidden="true"></span>Pre-launch</span>
+  <div class="bar-actions">
+    <a class="btn btn-ghost btn-sm bar-cta" href="#waitlist">Join the waitlist</a>
+    <button class="menu-btn" type="button" id="menu-open" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">
+      <span>Menu</span><span class="plus" aria-hidden="true">+</span>
+    </button>
+  </div>
 </header>
 
-<section aria-labelledby="problem">
-<h2 id="problem">The problem</h2>
-<p>Software agents fail the moment they hit the real world: store pickup, voice/phone gates, CAPTCHAs.</p>
-</section>
-
-<section aria-labelledby="solution">
-<h2 id="solution">The fix</h2>
-<p>Escrow-backed autonomous shopping that dispatches zero-knowledge human runners to clear physical and verification blocks. Runners never see buyer identity or payment details.</p>
-</section>
-
-<section aria-labelledby="waitlist">
-<h2 id="waitlist">Join the waitlist</h2>
-<div role="tablist" aria-label="Waitlist type" id="tabs" hidden>
-<button type="button" role="tab" id="tab-op" aria-controls="panel-op" aria-selected="true">Deploy an Agent</button>
-<button type="button" role="tab" id="tab-run" aria-controls="panel-run" aria-selected="false" tabindex="-1">Become a Runner</button>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-labelledby="menu-title" hidden>
+  <div class="menu-inner">
+    <div class="menu-top">
+      <p class="eyebrow" id="menu-title">Menu</p>
+      <button class="menu-btn" type="button" id="menu-close"><span>Close</span><span class="plus plus-x" aria-hidden="true">+</span></button>
+    </div>
+    <nav aria-label="Primary">
+      <ol class="menu-list">
+        <li><a href="#gap"><span class="idx">01</span>Where agents stall</a></li>
+        <li><a href="#flow"><span class="idx">02</span>How an order moves</a></li>
+        <li><a href="#example"><span class="idx">03</span>Try the example</a></li>
+        <li><a href="#runners"><span class="idx">04</span>For runners</a></li>
+        <li><a href="#status"><span class="idx">05</span>What exists today</a></li>
+        <li><a href="#waitlist"><span class="idx">06</span>Join the waitlist</a></li>
+      </ol>
+    </nav>
+    <p class="menu-foot">Pre-launch. Not yet live for customers.</p>
+  </div>
 </div>
 
-<form id="panel-op" role="tabpanel" aria-labelledby="tab-op" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
-<h3>Deploy an Agent — Buyers / Operators</h3>
-<input type="hidden" name="form-name" value="waitlist-operator">
-<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label for="op-email">Email</label>
-<input id="op-email" name="email" type="email" required autocomplete="email">
-<label for="op-company">Company <span class="opt">(optional)</span></label>
-<input id="op-company" name="company" type="text" autocomplete="organization">
-<label for="op-use">What would you automate? <span class="opt">(optional)</span></label>
-<textarea id="op-use" name="automate" rows="3"></textarea>
-<p><button class="btn" type="submit">Join as Operator</button></p>
-</form>
+<main id="main">
 
-<form id="panel-run" role="tabpanel" aria-labelledby="tab-run" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
-<h3>Become a Runner — Earners</h3>
-<input type="hidden" name="form-name" value="waitlist-runner">
-<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label for="run-email">Email</label>
-<input id="run-email" name="email" type="email" required autocomplete="email">
-<label for="run-loc">City / ZIP</label>
-<input id="run-loc" name="location" type="text" required autocomplete="postal-code">
-<label for="run-avail">Availability <span class="opt">(optional)</span></label>
-<select id="run-avail" name="availability">
-<option value="">Select…</option>
-<option>Weekdays</option>
-<option>Evenings</option>
-<option>Weekends</option>
-<option>Flexible</option>
-</select>
-<p><button class="btn" type="submit">Join as Runner</button></p>
-</form>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Governed purchasing for AI agents</p>
+      <h1 id="hero-title" class="reveal">Let agents buy&nbsp;— only inside the&nbsp;rules you&nbsp;set.</h1>
+      <p class="lede reveal">Bopcart checks every order against your spending cap and allowed merchants, binds approval to the exact amount, and hands real-world blockers — a store pickup, a phone gate — to a masked human runner.</p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="#waitlist" data-join="operator">Join as Operator</a>
+        <a class="btn btn-ghost" href="#waitlist" data-join="runner">Become a Runner</a>
+      </div>
+      <dl class="who reveal">
+        <div><dt>Operators</dt><dd>Teams deploying agents that need to purchase things.</dd></div>
+        <div><dt>Runners</dt><dd>People who clear the steps software can’t — without seeing who the buyer is.</dd></div>
+      </dl>
+      <p class="prelaunch reveal"><strong>Pre-launch.</strong> Not yet live for customers.</p>
+    </div>
+
+    <figure class="stack reveal" aria-labelledby="stack-cap">
+      <figcaption id="stack-cap" class="tag tag-example">Example · simulated</figcaption>
+      <div class="sheet sheet-back" aria-hidden="true">
+        <p class="mono k">intent</p>
+        <p class="sheet-q">“Reorder drill batteries and screws. Keep it under the cap.”</p>
+      </div>
+      <div class="sheet sheet-mid" aria-hidden="true">
+        <p class="mono k">policy review</p>
+        <ul class="checks">
+          <li><span class="ck ok" aria-hidden="true"></span>Under spending cap</li>
+          <li><span class="ck ok" aria-hidden="true"></span>Merchant on allow-list</li>
+          <li><span class="ck ok" aria-hidden="true"></span>Retries within limit</li>
+        </ul>
+      </div>
+      <div class="sheet sheet-front">
+        <div class="ticket-head">
+          <p class="mono k">approval</p>
+          <span class="tag tag-sim">not a real payment</span>
+        </div>
+        <p class="ticket-amt"><span class="cur">$</span>83.90</p>
+        <p class="ticket-m">Northside Hardware <span class="muted">· 2 items</span></p>
+        <p class="ticket-bind"><span class="lock" aria-hidden="true"></span>Bound to this amount and merchant. Any change voids it.</p>
+      </div>
+    </figure>
+  </div>
 </section>
 
-<footer>Bopcart · PrestigeSF</footer>
+<section class="gap" id="gap" aria-labelledby="gap-title">
+  <div class="wrap gap-grid">
+    <div>
+      <p class="eyebrow reveal">01 · Where agents stall</p>
+      <h2 id="gap-title" class="reveal">Software is fluent online. Then it reaches the curb.</h2>
+    </div>
+    <div class="gap-list">
+      <p class="reveal">Agents can browse, compare and fill a cart. They stop at the parts of commerce that assume a person is there:</p>
+      <ol class="stalls">
+        <li class="reveal"><span class="stall-k">Pickup</span><span>An order that has to be collected from a counter.</span></li>
+        <li class="reveal"><span class="stall-k">Voice</span><span>A phone or voice step before an order is released.</span></li>
+        <li class="reveal"><span class="stall-k">Checks</span><span>A human-verification challenge in the middle of checkout.</span></li>
+      </ol>
+      <p class="reveal">And even when checkout works, an operator needs to know the agent didn’t spend more, or somewhere else, than it was allowed to.</p>
+    </div>
+  </div>
+</section>
+
+<section class="flow" id="flow" aria-labelledby="flow-title">
+  <div class="wrap">
+    <p class="eyebrow reveal">02 · How an order moves</p>
+    <h2 id="flow-title" class="reveal">Calculate first. Approve the exact number. Keep a record you can inspect.</h2>
+    <ol class="rail">
+      <li class="reveal"><span class="rail-n">1</span><h3>Intent</h3><p>The agent states what it wants to buy, from where, and why.</p></li>
+      <li class="reveal"><span class="rail-n">2</span><h3>Policy review</h3><p>Checked against your rules before any checkout: spending cap, allowed merchants, retry limit.</p></li>
+      <li class="reveal"><span class="rail-n">3</span><h3>Authorization</h3><p>Approval covers one merchant, one set of items, one amount. Change any of them and it no longer applies.</p></li>
+      <li class="reveal"><span class="rail-n">4</span><h3>Inspectable receipt</h3><p>Tamper-evident signed receipts (post-quantum signing in development).</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="example" id="example" aria-labelledby="ex-title">
+  <div class="wrap">
+    <div class="ex-head">
+      <div>
+        <p class="eyebrow reveal">03 · Try the example</p>
+        <h2 id="ex-title" class="reveal">Approve an order. Then try to change it.</h2>
+      </div>
+      <p class="ex-disclaimer reveal"><span class="tag tag-example">Example · simulated</span> Runs entirely in your browser. No money moves, nothing is sent anywhere, and the receipt is unsigned example data.</p>
+    </div>
+
+    <noscript><p class="nojs">This interactive example needs JavaScript. In short: an order is checked against a spending cap, an allow-list of merchants and a retry limit; approval is bound to the exact merchant, items and amount; editing any of them afterwards voids the approval.</p></noscript>
+
+    <div class="console" id="console" data-state="intent">
+      <div class="console-side">
+        <fieldset class="presets">
+          <legend>Scenario</legend>
+          <div class="preset-row">
+            <button type="button" class="chip" data-preset="ok" aria-pressed="true">Within policy</button>
+            <button type="button" class="chip" data-preset="cap" aria-pressed="false">Over the cap</button>
+            <button type="button" class="chip" data-preset="merchant" aria-pressed="false">Merchant not allowed</button>
+            <button type="button" class="chip" data-preset="pickup" aria-pressed="false">Needs a person</button>
+          </div>
+        </fieldset>
+
+        <div class="cart" aria-labelledby="cart-title">
+          <h3 id="cart-title" class="cart-title">Example cart</h3>
+          <label for="ex-merchant">Merchant</label>
+          <select id="ex-merchant">
+            <option value="northside">Northside Hardware</option>
+            <option value="corner">Corner Pharmacy</option>
+            <option value="quickdeals">QuickDeals Outlet</option>
+          </select>
+          <label for="ex-fulfil">Fulfilment</label>
+          <select id="ex-fulfil">
+            <option value="ship">Ship to operator address</option>
+            <option value="pickup">In-store pickup (needs a person)</option>
+          </select>
+          <ul class="items" id="ex-items"></ul>
+          <p class="total"><span>Order amount</span><output id="ex-total" for="ex-merchant">$0.00</output></p>
+          <p class="cart-status" id="cart-status" hidden></p>
+          <p class="policy-note">Example policy: cap <strong class="mono">$150.00</strong> per order · allow-list: Northside Hardware, Corner Pharmacy · up to <strong class="mono">2</strong> automatic retries</p>
+        </div>
+      </div>
+
+      <div class="console-main">
+        <ol class="steps" aria-label="Example progress">
+          <li data-step="intent">Intent</li>
+          <li data-step="policy">Policy</li>
+          <li data-step="review">Review</li>
+          <li data-step="approved">Approval</li>
+          <li data-step="receipt">Receipt</li>
+        </ol>
+        <div class="stage" id="stage"></div>
+        <p class="sr-only" id="ex-live" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="runners" id="runners" aria-labelledby="run-title">
+  <div class="wrap run-grid">
+    <div>
+      <p class="eyebrow reveal">04 · For runners</p>
+      <h2 id="run-title" class="reveal">A masked runner clears the step. The buyer stays private.</h2>
+      <p class="reveal">When an order needs a person — collecting from a counter, answering a voice prompt — Bopcart is designed to post a narrow task to a nearby runner. The task carries what’s needed to finish that step and nothing about who is buying.</p>
+      <p class="reveal muted">The runner network is not recruited yet. Joining the waitlist is how that starts.</p>
+      <a class="btn btn-ink reveal" href="#waitlist" data-join="runner">Become a Runner</a>
+    </div>
+    <div class="task reveal" role="group" aria-labelledby="task-title">
+      <div class="task-head">
+        <p class="mono k" id="task-title">runner task · example</p>
+        <span class="tag tag-paper">masked</span>
+      </div>
+      <div class="task-cols">
+        <div>
+          <p class="task-h">What the runner sees</p>
+          <ul class="see">
+            <li>Pickup at a store counter, general area</li>
+            <li>Item names and quantities</li>
+            <li>A one-time pickup token</li>
+            <li>Where to hand off</li>
+          </ul>
+        </div>
+        <div>
+          <p class="task-h">What the runner never sees</p>
+          <ul class="never">
+            <li>Buyer name <span class="mono tok">{{BUYER}}</span></li>
+            <li>Payment card <span class="mono tok">{{CARD}}</span></li>
+            <li>Home address <span class="mono tok">{{ADDR}}</span></li>
+            <li>Why the agent is buying</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="status" id="status" aria-labelledby="status-title">
+  <div class="wrap">
+    <p class="eyebrow reveal">05 · What exists today</p>
+    <h2 id="status-title" class="reveal">Straight answers about where this is.</h2>
+    <div class="table-wrap reveal">
+      <table class="ledger">
+        <caption class="sr-only">Capabilities and their current state</caption>
+        <thead><tr><th scope="col">Capability</th><th scope="col">State</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Policy checks — spending cap, merchant allow-list, retry limit</th><td><span class="st st-code">In code</span>Evaluated before checkout.</td></tr>
+          <tr><th scope="row">Approval bound to the exact amount</th><td><span class="st st-code">In code</span>The same decision and amount carry from policy through checkout.</td></tr>
+          <tr><th scope="row">Personal details replaced with tokens before the model sees them</th><td><span class="st st-code">In code</span>Names, cards and addresses become handles.</td></tr>
+          <tr><th scope="row">Masked runner tasks</th><td><span class="st st-code">In code</span>No runner network exists yet.</td></tr>
+          <tr><th scope="row">Tamper-evident signed receipts</th><td><span class="st st-dev">In development</span>Post-quantum signing in development.</td></tr>
+          <tr><th scope="row">Escrow</th><td><span class="st st-design">Designed</span>Designed for 2-of-3 escrow. No money moves today.</td></tr>
+          <tr><th scope="row">Customer access</th><td><span class="st st-no">Not live</span>Pre-launch. Not yet live for customers.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="waitlist" aria-labelledby="wl-title">
+  <div class="wrap join-grid">
+    <div class="join-copy">
+      <p class="eyebrow">06 · Waitlist</p>
+      <h2 id="wl-title">Get early access.</h2>
+      <p>Tell us which side you’re on. We’ll email when there’s something real to try — no newsletter, no sharing your address.</p>
+      <p class="prelaunch"><strong>Pre-launch.</strong> Not yet live for customers.</p>
+    </div>
+    <div class="join-forms">
+      <div role="tablist" aria-label="Waitlist type" id="tabs" class="tabs" hidden>
+        <button type="button" role="tab" id="tab-op" aria-controls="tp-op" aria-selected="true">Deploy an Agent</button>
+        <button type="button" role="tab" id="tab-run" aria-controls="tp-run" aria-selected="false" tabindex="-1">Become a Runner</button>
+      </div>
+
+      <div id="tp-op" role="tabpanel" aria-labelledby="tab-op">
+      <form id="panel-op" class="wl-form" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+        <h3>Deploy an Agent — Buyers / Operators</h3>
+        <input type="hidden" name="form-name" value="waitlist-operator">
+        <p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="err-summary" role="alert" hidden></div>
+        <div class="field">
+          <label for="op-email">Email</label>
+          <input id="op-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="op-email-err">
+          <p class="err" id="op-email-err" hidden></p>
+        </div>
+        <div class="field">
+          <label for="op-company">Company <span class="opt">(optional)</span></label>
+          <input id="op-company" name="company" type="text" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="op-use">What would you automate? <span class="opt">(optional)</span></label>
+          <textarea id="op-use" name="automate" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Join as Operator</button>
+      </form>
+      </div>
+
+      <div id="tp-run" role="tabpanel" aria-labelledby="tab-run">
+      <form id="panel-run" class="wl-form" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+        <h3>Become a Runner — Earners</h3>
+        <input type="hidden" name="form-name" value="waitlist-runner">
+        <p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="err-summary" role="alert" hidden></div>
+        <div class="field">
+          <label for="run-email">Email</label>
+          <input id="run-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="run-email-err">
+          <p class="err" id="run-email-err" hidden></p>
+        </div>
+        <div class="field">
+          <label for="run-loc">City / ZIP</label>
+          <input id="run-loc" name="location" type="text" required autocomplete="postal-code" aria-describedby="run-loc-err">
+          <p class="err" id="run-loc-err" hidden></p>
+        </div>
+        <div class="field">
+          <label for="run-avail">Availability <span class="opt">(optional)</span></label>
+          <select id="run-avail" name="availability">
+            <option value="">Select…</option>
+            <option>Weekdays</option>
+            <option>Evenings</option>
+            <option>Weekends</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Join as Runner</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
-<script>
-(function(){
-  var tabs=document.getElementById('tabs');tabs.hidden=false;
-  var b=[document.getElementById('tab-op'),document.getElementById('tab-run')];
-  function sel(i){b.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});}
-  b.forEach(function(t,i){t.addEventListener('click',function(){sel(i)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=(i+1)%2;sel(n);b[n].focus();}});});
-  sel(0);
-})();
-</script>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <img src="/assets/mark.svg" alt="" width="28" height="28">
+      <span class="brand-word">Bopcart</span>
+    </a>
+    <p>Pre-launch. Not yet live for customers.</p>
+    <p class="muted">Bopcart · a PrestigeSF project · Fonts: Bricolage Grotesque, Instrument Sans, JetBrains Mono (SIL OFL), served from this site.</p>
+  </div>
+</footer>
 </body>
 </html>
