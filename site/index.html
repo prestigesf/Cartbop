@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bopcart — Autonomous Agents with a Human Fallback</title>
+<meta name="description" content="Autonomous commerce with an on-demand human fallback.">
+<style>
+:root{--bg:#0b0d0c;--fg:#d8e0da;--dim:#8a968e;--g:#39ff88;--a:#ffb000;--line:#1f2622}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+main{max-width:760px;margin:0 auto;padding:3rem 1.25rem}
+h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.2;color:var(--g);margin:0 0 .75rem}
+h2{font-size:1.1rem;color:var(--a);margin:2.5rem 0 .5rem}
+h2::before{content:"> ";color:var(--g)}
+.sub{color:var(--dim);margin:0}
+section{border-top:1px solid var(--line)}
+[role=tablist]{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
+button,.btn{font:inherit;cursor:pointer;background:transparent;color:var(--fg);border:1px solid var(--dim);padding:.6rem 1rem;border-radius:4px}
+button[aria-selected=true]{border-color:var(--g);color:var(--g)}
+.btn{border-color:var(--g);color:var(--bg);background:var(--g);font-weight:700}
+:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+form{border:1px solid var(--line);padding:1.25rem;border-radius:4px;margin-bottom:1rem}
+form h3{margin:0 0 1rem;font-size:1rem;color:var(--g)}
+label{display:block;margin:.75rem 0 .25rem;color:var(--fg)}
+input,select,textarea{width:100%;font:inherit;color:var(--fg);background:#121614;border:1px solid var(--dim);border-radius:4px;padding:.55rem}
+.hp{position:absolute;left:-9999px}
+.opt{color:var(--dim)}
+footer{color:var(--dim);border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Autonomous Agents with a Real Wallet—and a Human Fallback.</h1>
+<p class="sub">Autonomous Commerce with an On-Demand Human Fallback.</p>
+</header>
+
+<section aria-labelledby="problem">
+<h2 id="problem">The problem</h2>
+<p>Software agents fail the moment they hit the real world: store pickup, voice/phone gates, CAPTCHAs.</p>
+</section>
+
+<section aria-labelledby="solution">
+<h2 id="solution">The fix</h2>
+<p>Escrow-backed autonomous shopping that dispatches zero-knowledge human runners to clear physical and verification blocks. Runners never see buyer identity or payment details.</p>
+</section>
+
+<section aria-labelledby="waitlist">
+<h2 id="waitlist">Join the waitlist</h2>
+<div role="tablist" aria-label="Waitlist type" id="tabs" hidden>
+<button type="button" role="tab" id="tab-op" aria-controls="panel-op" aria-selected="true">Deploy an Agent</button>
+<button type="button" role="tab" id="tab-run" aria-controls="panel-run" aria-selected="false" tabindex="-1">Become a Runner</button>
+</div>
+
+<form id="panel-op" role="tabpanel" aria-labelledby="tab-op" name="waitlist-operator" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+<h3>Deploy an Agent — Buyers / Operators</h3>
+<input type="hidden" name="form-name" value="waitlist-operator">
+<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<label for="op-email">Email</label>
+<input id="op-email" name="email" type="email" required autocomplete="email">
+<label for="op-company">Company <span class="opt">(optional)</span></label>
+<input id="op-company" name="company" type="text" autocomplete="organization">
+<label for="op-use">What would you automate? <span class="opt">(optional)</span></label>
+<textarea id="op-use" name="automate" rows="3"></textarea>
+<p><button class="btn" type="submit">Join as Operator</button></p>
+</form>
+
+<form id="panel-run" role="tabpanel" aria-labelledby="tab-run" name="waitlist-runner" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+<h3>Become a Runner — Earners</h3>
+<input type="hidden" name="form-name" value="waitlist-runner">
+<p class="hp"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<label for="run-email">Email</label>
+<input id="run-email" name="email" type="email" required autocomplete="email">
+<label for="run-loc">City / ZIP</label>
+<input id="run-loc" name="location" type="text" required autocomplete="postal-code">
+<label for="run-avail">Availability <span class="opt">(optional)</span></label>
+<select id="run-avail" name="availability">
+<option value="">Select…</option>
+<option>Weekdays</option>
+<option>Evenings</option>
+<option>Weekends</option>
+<option>Flexible</option>
+</select>
+<p><button class="btn" type="submit">Join as Runner</button></p>
+</form>
+</section>
+
+<footer>Bopcart · PrestigeSF</footer>
+</main>
+<script>
+(function(){
+  var tabs=document.getElementById('tabs');tabs.hidden=false;
+  var b=[document.getElementById('tab-op'),document.getElementById('tab-run')];
+  function sel(i){b.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});}
+  b.forEach(function(t,i){t.addEventListener('click',function(){sel(i)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=(i+1)%2;sel(n);b[n].focus();}});});
+  sel(0);
+})();
+</script>
+</body>
+</html>
